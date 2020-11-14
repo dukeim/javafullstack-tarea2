@@ -1,0 +1,49 @@
+<mat-toolbar>Registro de Venta</mat-toolbar>
+
+<div class="example-container">
+
+    <mat-form-field>
+        <mat-select placeholder="Selecciona persona" [(value)]="idPersonaSeleccionada">
+            <mat-option *ngFor="let p of (personas$ | async)" [value]="p.idPersona">
+                {{ p.nombres }} {{ p.apellidos }}
+            </mat-option>
+        </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Escoger una fecha (dd/mm/yyyy)" 
+            [(ngModel)]="fechaSeleccionada" [max]="maxFecha">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="number" placeholder="Importe" [(ngModel)]="importe">
+    </mat-form-field>
+
+
+    <mat-form-field>
+        <mat-select placeholder="Selecciona producto" [(value)]="idProductoSeleccionado">
+            <mat-option *ngFor="let p of (productos$ | async)" [value]="p.idProducto">
+                {{ p.nombre }} - {{ p.marca }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="number" placeholder="Cantidad" [(ngModel)]="cantidad">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="agregarProducto()">Agregar producto</button>
+
+    <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let prod of productosSeleccionados; let i = index">
+            {{prod.idProducto}} {{prod.nombre}} - {{ prod.marca}}
+            <button mat-raised-button color="warn">Remover</button>
+        </mat-list-item>
+    </mat-list>
+
+    <button mat-raised-button color="primary" (click)="aceptar()" [disabled]="estadoBotonRegistrar()">Registrar</button>
+
+</div>
